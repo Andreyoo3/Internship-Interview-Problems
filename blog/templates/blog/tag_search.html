@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+
+
+<div class="jumbotron">
+	<h1 align='center'>Blogs tagged with {{tag}}</h1>
+</div>
+
+
+<div class='col-md-12'>
+{% if blogs %}
+	{% for blog in blogs %}
+		<h3 class="page-header">
+			<a href="{% url 'blog:add_blog' %}?id={{blog.id}}">{{blog.title}}</a>
+		</h3>
+		{{blog.body|linebreaks}}
+		{% for tag in blog.tags.all %}
+			{{tag}}{% if not forloop.last %} | {% endif %}
+		{% endfor %}
+	{% endfor %}
+{% else %}
+<div class='alert alert-warning' align='center'>
+	<h3>No Blogs With This Tag!</h3>
+</div>
+{% endif %}
+</div>
+
+
+{% endblock body %}
